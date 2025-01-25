@@ -1,0 +1,10 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+}
+
+.headerText {
+    color: rgb(74, 74, 75);
+    margin-bottom: 40px;
+}
