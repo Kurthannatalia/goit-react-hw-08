@@ -1,0 +1,113 @@
+.modal {
+    position: absolute;
+    background-image: linear-gradient(to bottom,
+            var(--input-placeholder-primary-color),
+            var(--input-border-primary-color));
+    height: 300px;
+    width: 280px;
+    top: 50%;
+    right: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    transform: translate(50%, -50%);
+    border-radius: 8px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(to bottom,
+            var(--gradient-on-image-first-color),
+            var(--input-placeholder-primary-color));
+}
+
+.modalWindow {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.listItemContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+}
+
+.contactName {
+    padding-left: 34px;
+    width: 240px;
+    height: 40px;
+    border: 1px solid var(--gradient-on-image-first-color);
+    border-radius: 6px;
+    background-color: transparent;
+    color: var(--text-primary-color);
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.contactName:focus {
+    color: var(--input-focus-primary-color);
+    border: 1.5px solid var(--button-color);
+}
+
+.contactName::placeholder {
+    color: var(--input-placeholder-primary-color);
+}
+
+.listItemPice {
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translate(2px, -50%);
+    color: var(--input-text-primary-color);
+}
+
+.buttonChange {
+    color: var(--text-primary-color);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    width: 120px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.5s;
+    cursor: pointer;
+    background: var(--input-text-primary-color);
+    box-shadow: 0px 4px 8px 0px var(--button-shadow);
+    transition: box-shadow 0.5s;
+}
+
+.buttonChange:hover {
+    box-shadow: 0px 4px 14px 0px var(--button-hover-shadow);
+}
+
+@media screen and (min-width: 768px) {
+    .modal {
+        height: 380px;
+        width: 380px;
+    }
+
+    .modalWindow {
+        gap: 32px;
+    }
+
+    .listItemContainer {
+        gap: 24px;
+    }
+}
