@@ -1,0 +1,101 @@
+@media screen and (min-width: 320px) {
+    .avatar {
+        width: 44px;
+        height: 44px;
+    }
+
+    .ItemContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .editIcon {
+        width: 24px;
+        height: 24px;
+        color: var(--input-placeholder-primary-color);
+        transition: all 0.5s ease-in-out;
+    }
+
+    .editIcon:hover {
+        color: var(--button-color);
+    }
+
+    .deleteIcon {
+        width: 24px;
+        height: 24px;
+        transition: all 0.5s ease-in-out;
+        color: var(--red-primary-color);
+    }
+
+    .deleteIcon:hover {
+        color: var(--red-hover-color);
+    }
+
+    .valuesContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 12px;
+    }
+
+    .ItemPice {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        background-color: transparent;
+        border-bottom: 1px solid var(--input-border-primary-color);
+        text-transform: capitalize;
+        width: 180px;
+        padding-left: 8px;
+        height: 24px;
+        color: var(--text-primary-color);
+    }
+
+    .icon {
+        color: var(--input-text-primary-color);
+    }
+
+    .buttonContainer {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .deleteButton {
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        border: none;
+        width: 40px;
+        height: 32px;
+        justify-content: center;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .buttonChange {
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        border: none;
+        width: 40px;
+        height: 32px;
+        justify-content: center;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .avatarAndButtons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 768px) {}

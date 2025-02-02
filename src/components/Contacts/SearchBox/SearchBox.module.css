@@ -1,0 +1,49 @@
+@media screen and (min-width: 320px) {
+    .filter {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 24px;
+        margin: 0 auto;
+        margin-bottom: 40px;
+    }
+
+    .label {
+        color: rgb(213, 223, 245);
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 24px;
+    }
+
+    .filterInput {
+        color: rgb(80, 130, 242);
+        padding-left: 16px;
+        width: 240px;
+        height: 40px;
+        border-radius: 8px;
+        background-color: transparent;
+        border: 1px solid rgb(59, 67, 116);
+        outline: transparent;
+    }
+
+    .filterInput:focus {
+        color: rgb(158, 187, 255);
+    }
+
+    .filterInput::placeholder {
+        color: rgb(47, 56, 117);
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .filter {
+        align-items: flex-start;
+    }
+
+    .filterInput {
+        width: 260px;
+        height: 40px;
+    }
+}

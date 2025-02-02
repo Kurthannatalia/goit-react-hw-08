@@ -1,0 +1,26 @@
+@media screen and (min-width: 320px) {
+    .wrapper {
+        background-image: linear-gradient(to bottom,
+                var(--gradient-on-image-first-color),
+                var(--gradient-on-image-second-color)),
+            url(../../../public/telephone.png);
+        background-repeat: no-repeat;
+        background-size: cover, 90%;
+        background-position: center bottom 20%;
+        height: 100vh;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .wrapper {
+        background-size: cover, 66%;
+        background-position: left 20% bottom 10%;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .wrapper {
+        background-size: cover, 55%;
+        background-position: left 32% bottom 5%;
+    }
+}
