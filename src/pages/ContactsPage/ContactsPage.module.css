@@ -1,0 +1,43 @@
+@media screen and (min-width: 320px) {
+    .container {
+        padding: 0 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .contactsListContainer {
+        height: 500px;
+        margin-top: 24px;
+        display: flex;
+        overflow: auto;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .container {
+        padding: 0 32px;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .contactsListContainer {
+        margin-top: 180px;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .container {
+        padding: 0 42px;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .contactsListContainer {
+        height: 500px;
+        margin-top: 180px;
+        display: flex;
+        overflow: auto;
+    }
+}
