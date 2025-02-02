@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addContact, deleteContact, fetchContacts } from "./contactsOps";
-import { createSelector } from "@reduxjs/toolkit";
-import { selectContacts, selectNameFilter } from "./selectors";
+import {
+  addContact,
+  changeContact,
+  deleteContact,
+  fetchContacts,
+} from "./operations";
+import { logOut } from "../auth/operations";
 
 const handlePending = (state) => {
   state.loading = true;
@@ -24,14 +28,14 @@ const contactsSlice = createSlice({
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.items = action.payload;
+        state.items = action.payload.data.data;
       })
       .addCase(fetchContacts.rejected, handleError)
       .addCase(addContact.pending, handlePending)
       .addCase(addContact.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.items.push(action.payload);
+        state.items.push(action.payload.data);
       })
       .addCase(addContact.rejected, handleError)
       .addCase(deleteContact.pending, handlePending)
@@ -39,32 +43,30 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = null;
         const index = state.items.findIndex(
-          (contact) => contact.id === action.payload.id
+          (contact) => contact._id === action.payload.data
         );
         state.items.splice(index, 1);
       })
-      .addCase(deleteContact.rejected, handleError);
+      .addCase(deleteContact.rejected, handleError)
+      .addCase(changeContact.pending, handlePending)
+      .addCase(changeContact.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+
+        const index = state.items.findIndex(
+          (contact) => contact._id === action.payload.data._id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload.data;
+        }
+      })
+      .addCase(changeContact.rejected, handleError)
+      .addCase(logOut.fulfilled, (state) => {
+        state.items = [];
+        state.error = null;
+        state.loading = false;
+      });
   },
 });
-
-export const selectFilteredContacts = createSelector(
-  [selectContacts, selectNameFilter],
-  (contacts, selectNameFilter) => {
-    return contacts.filter((contact) => {
-      if ("id" in contact && "name" in contact && "number" in contact) {
-        if (
-          typeof contact.id === "string" &&
-          typeof contact.name === "string" &&
-          typeof contact.number === "string"
-        ) {
-          return contact.name
-            .toLowerCase()
-            .includes(selectNameFilter.toLowerCase());
-        }
-      }
-      return false;
-    });
-  }
-);
 
 export const contactReducer = contactsSlice.reducer;
