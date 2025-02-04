@@ -24,10 +24,8 @@ export const register = createAsyncThunk(
       }
 
       setAuthHeader(token);
-      console.log("Register successful:", response.data);
       return response.data;
     } catch (error) {
-      console.error("Register error:", error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -45,22 +43,18 @@ export const logIn = createAsyncThunk(
       }
 
       setAuthHeader(token);
-      console.log("Login successful:", response.data);
       return response.data;
     } catch (error) {
-      console.error("Login error:", error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-export const logOut = createAsyncThunk("/auth/logout", async (_, thunkAPI) => {
+export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     await axios.post("/auth/logout");
     clearAuthHeader();
-    console.log("Logout successful");
   } catch (error) {
-    console.error("Logout error:", error.message);
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -72,24 +66,14 @@ export const refreshUser = createAsyncThunk(
     const persistedToken = state.auth.token;
 
     if (!persistedToken) {
-      console.warn("No persisted token found. Skipping refresh.");
       return thunkAPI.rejectWithValue("Unable to fetch user");
     }
 
     try {
       setAuthHeader(persistedToken);
-      const response = await axios.post("/auth/current", {});
-      const { token } = response.data.data;
-
-      if (!token) {
-        throw new Error("Token not returned on refresh");
-      }
-
-      setAuthHeader(token);
-      console.log("User refreshed successfully:", response.data);
+      const response = await axios.get("/auth/current");
       return response.data;
     } catch (error) {
-      console.error("Refresh user error:", error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
