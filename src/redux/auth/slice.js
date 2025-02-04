@@ -16,7 +16,7 @@ const authSlice = createSlice({
       name: "",
       email: "",
     },
-    accessToken: "",
+    token: "",
     isLoggedIn: false,
     isRefreshing: false,
     isLoading: false,
@@ -27,7 +27,6 @@ const authSlice = createSlice({
       .addCase(register.pending, handlePending)
       .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload.data;
-        // state.accessToken = action.payload.data.accessToken;
         state.isLoggedIn = true;
         console.log("LogIn Fulfilled Payload:", action.payload);
       })
@@ -35,14 +34,14 @@ const authSlice = createSlice({
       .addCase(logIn.pending, handlePending)
       .addCase(logIn.fulfilled, (state, action) => {
         state.user = action.payload.data.user;
-        state.accessToken = action.payload.data.accessToken;
+        state.token = action.payload.data.token;
         state.isLoggedIn = true;
       })
       .addCase(logIn.rejected, handleRejected)
       .addCase(logOut.pending, handlePending)
       .addCase(logOut.fulfilled, (state) => {
         state.user = { name: "", email: "" };
-        state.accessToken = null;
+        state.token = "";
         state.isLoggedIn = false;
       })
       .addCase(logOut.rejected, handleRejected)
@@ -52,7 +51,7 @@ const authSlice = createSlice({
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload.data.user;
-        state.accessToken = action.payload.data.accessToken;
+        state.token = action.payload.data.token;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
@@ -63,4 +62,5 @@ const authSlice = createSlice({
       });
   },
 });
+
 export const authReducer = authSlice.reducer;
