@@ -15,6 +15,7 @@ const handleError = (state, action) => {
   state.loading = false;
   state.error = action.payload;
 };
+
 const contactsSlice = createSlice({
   name: "contacts",
   initialState: {
@@ -28,14 +29,14 @@ const contactsSlice = createSlice({
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.items = action.payload.data.data;
+        state.items = action.payload; // Використовуємо payload без зайвих даних
       })
       .addCase(fetchContacts.rejected, handleError)
       .addCase(addContact.pending, handlePending)
       .addCase(addContact.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.items.push(action.payload.data);
+        state.items.push(action.payload); // Підтримуємо додавання нового контакту
       })
       .addCase(addContact.rejected, handleError)
       .addCase(deleteContact.pending, handlePending)
@@ -43,7 +44,7 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = null;
         const index = state.items.findIndex(
-          (contact) => contact._id === action.payload.data
+          (contact) => contact._id === action.payload._id // Перевіряємо правильний ID
         );
         state.items.splice(index, 1);
       })
@@ -52,12 +53,11 @@ const contactsSlice = createSlice({
       .addCase(changeContact.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-
         const index = state.items.findIndex(
-          (contact) => contact._id === action.payload.data._id
+          (contact) => contact._id === action.payload._id // Перевіряємо правильний ID
         );
         if (index !== -1) {
-          state.items[index] = action.payload.data;
+          state.items[index] = action.payload;
         }
       })
       .addCase(changeContact.rejected, handleError)

@@ -1,71 +1,52 @@
-import { FaPhone } from "react-icons/fa6";
-import { FaUser } from "react-icons/fa";
-import css from "./Contact.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { FaPencil } from "react-icons/fa6";
-import { MdDeleteForever } from "react-icons/md";
-import { editModal, openModal } from "../../../redux/modalWindow/slice";
-import EditModal from "../../modalWindows/EditModal/EditModal";
-import ConfirmModal from "../../modalWindows/ConfirmModal/ConfirmModal";
-import { selectEditContactId } from "../../../redux/modalWindow/selectors";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-import { RxAvatar } from "react-icons/rx";
+axios.defaults.baseURL = "https://connections-api.goit.global/";
 
-export default function Contact({ id, name, phoneNumber }) {
-  const dispatch = useDispatch();
+export const fetchContacts = createAsyncThunk(
+  "contacts/fetchAll",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get("/contacts");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
-  const contactId = useSelector(selectEditContactId);
+export const addContact = createAsyncThunk(
+  "contacts/addContact",
+  async ({ name, number }, thunkAPI) => {
+    try {
+      const response = await axios.post("/contacts", { name, number });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
-  const handleDelete = () => {
-    dispatch(openModal(id));
-  };
-  const handleEdit = () => {
-    dispatch(editModal(id));
-  };
+export const deleteContact = createAsyncThunk(
+  "contacts/deleteContact",
+  async (contactId, thunkAPI) => {
+    try {
+      await axios.delete(`/contacts/${contactId}`);
+      return contactId;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
-  return (
-    <>
-      <div className={css.avatarAndButtons}>
-        <RxAvatar className={css.avatar} />
-        <div className={css.buttonContainer}>
-          <button
-            className={css.buttonChange}
-            type="button"
-            onClick={handleEdit}
-          >
-            <FaPencil className={css.editIcon} />
-          </button>
-          <button
-            className={css.deleteButton}
-            type="button"
-            onClick={handleDelete}
-          >
-            <MdDeleteForever className={css.deleteIcon} />
-          </button>
-        </div>
-      </div>
-      <div className={css.ItemContainer}>
-        <div className={css.valuesContainer}>
-          <p className={css.ItemPice}>
-            <FaUser className={css.icon} />
-            {name}
-            {/*  <span className={css.contactName}></span> */}
-          </p>
-          <p className={css.ItemPice}>
-            <FaPhone className={css.icon} />
-            {phoneNumber}
-            {/* <span className={css.contactName}></span> */}
-          </p>
-        </div>
-      </div>
-      {contactId === id && (
-        <EditModal
-          contactId={contactId}
-          name={name}
-          phoneNumber={phoneNumber}
-        />
-      )}
-      <ConfirmModal />
-    </>
-  );
-}
+export const changeContact = createAsyncThunk(
+  "contacts/changeContact",
+  async ({ contactId, name, number }, thunkAPI) => {
+    try {
+      const response = await axios.patch(`/contacts/${contactId}`, { name, number });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

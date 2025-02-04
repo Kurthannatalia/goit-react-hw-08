@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import { useId } from "react";
 import css from "./ContactForm.module.css";
 import { useDispatch, useSelector } from "react-redux";
-
 import { IoPersonAddOutline } from "react-icons/io5";
 import { selectUser } from "../../../redux/auth/selectors";
 import { addContact } from "../../../redux/contacts/operations";
@@ -20,35 +19,32 @@ export default function ContactForm() {
       .min(2, "Too Short!")
       .max(30, "Too Long!")
       .required("Required"),
-    phoneNumber: Yup.string()
+    number: Yup.string()
       .min(9, "Too Short!")
       .max(12, "Too Long!")
       .required("Required"),
   });
 
   const handleSubmit = (values, actions) => {
-    const { name, phoneNumber } = values;
-    dispatch(addContact({ name, phoneNumber }))
+    dispatch(addContact(values))
       .unwrap()
       .then(() => {
         showToast("Contact add successful!", "success");
         actions.resetForm();
       })
       .catch((error) => {
-        showToast(`"Contact add failed! ${error}`, "error");
+        showToast(`Contact add failed! ${error}`, "error");
       });
   };
 
   return (
-    //TODO Перенести це в окремий компонент
     <div className={css.container}>
       <p className={css.welcome}>Welcome {name}</p>
 
       <Formik
-        className={css.contactForm}
         validationSchema={contactsSchema}
         onSubmit={handleSubmit}
-        initialValues={{ name: "", phoneNumber: "" }}
+        initialValues={{ name: "", number: "" }}
       >
         <Form className={css.contactForm}>
           <div className={css.inputContainer}>
@@ -72,14 +68,10 @@ export default function ContactForm() {
               className={css.nameInput}
               id={formNumberId}
               type="tel"
-              name="phoneNumber"
+              name="number"
               placeholder="Enter your phone number"
             />
-            <ErrorMessage
-              className={css.error}
-              name="phoneNumber"
-              component="span"
-            />
+            <ErrorMessage className={css.error} name="number" component="span" />
           </div>
           <button className={css.buttonSubmit} type="submit">
             <IoPersonAddOutline /> Add contact
