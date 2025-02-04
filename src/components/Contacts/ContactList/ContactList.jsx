@@ -13,20 +13,14 @@ const ContactList = () => {
 
   return (
     <div className={css.container}>
-      <div>{isLoading && <Loading />}</div>
+      {isLoading && <Loading />}
 
       <ul className={css.list}>
-        {contacts.map((contact) => {
-          return (
-            <li className={css.listItem} key={contact._id}>
-              <Contact
-                id={contact._id}
-                name={contact.name}
-                phoneNumber={contact.phoneNumber}
-              />
-            </li>
-          );
-        })}
+        {contacts.map(({ id, name, number }) => (
+          <li className={css.listItem} key={id}>
+            <Contact id={id} name={name} number={number} />
+          </li>
+        ))}
       </ul>
     </div>
   );

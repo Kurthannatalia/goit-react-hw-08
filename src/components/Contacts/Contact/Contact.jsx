@@ -1,52 +1,29 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../../redux/contacts/operations";
+import css from "./Contact.module.css";
 
-axios.defaults.baseURL = "https://connections-api.goit.global/";
+const Contact = ({ id, name, number }) => {
+  const dispatch = useDispatch();
 
-export const fetchContacts = createAsyncThunk(
-  "contacts/fetchAll",
-  async (_, thunkAPI) => {
-    try {
-      const response = await axios.get("/contacts");
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+  const handleDelete = () => {
+    dispatch(deleteContact(id));
+  };
 
-export const addContact = createAsyncThunk(
-  "contacts/addContact",
-  async ({ name, number }, thunkAPI) => {
-    try {
-      const response = await axios.post("/contacts", { name, number });
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+  return (
+    <div className={css.contact}>
+      <p className={css.name}>{name}: {number}</p>
+      <button className={css.deleteButton} onClick={handleDelete}>
+        Delete
+      </button>
+    </div>
+  );
+};
 
-export const deleteContact = createAsyncThunk(
-  "contacts/deleteContact",
-  async (contactId, thunkAPI) => {
-    try {
-      await axios.delete(`/contacts/${contactId}`);
-      return contactId;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+Contact.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+};
 
-export const changeContact = createAsyncThunk(
-  "contacts/changeContact",
-  async ({ contactId, name, number }, thunkAPI) => {
-    try {
-      const response = await axios.patch(`/contacts/${contactId}`, { name, number });
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+export default Contact;
