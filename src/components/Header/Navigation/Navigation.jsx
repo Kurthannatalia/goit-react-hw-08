@@ -17,7 +17,7 @@ const Navigation = () => {
         <div className={clsx(css.linkBox, { [css.highlighted]: isHomeActive })}>
           <NavLink className={css.link} to="/">
             Home
-          </NavLink>{" "}
+          </NavLink>
         </div>
       )}
 
@@ -25,10 +25,13 @@ const Navigation = () => {
         <div
           className={clsx(css.linkBox, { [css.highlighted]: isContactsActive })}
         >
-          <NavLink className={css.link}>Contacts</NavLink>
+          <NavLink className={css.link} to="/contacts">
+            Contacts
+          </NavLink>
         </div>
       )}
     </nav>
   );
 };
+
 export default Navigation;
