@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { lazy, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { refreshUser } from "../../redux/auth/operations";
-import { selectIsRefreshing, selectToken } from "../../redux/auth/selectors";
+import { selectIsRefreshing } from "../../redux/auth/selectors";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "../common/Layout/Layout";
@@ -23,12 +23,9 @@ const ContactsPage = lazy(() =>
 function App() {
   const dispatch = useDispatch();
   const IsRefreshing = useSelector(selectIsRefreshing);
-  const token = useSelector(selectToken);
 
   useEffect(() => {
-    if (token) {
-      dispatch(refreshUser());
-    }
+    dispatch(refreshUser());
   }, [dispatch]);
 
   return IsRefreshing ? (
